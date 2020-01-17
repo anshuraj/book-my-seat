@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta charset="UTF-8" />
+  <style>
+    .seat {
+      display: flex;
+      justify-content: center;
+      height: 15px;
+      width: 15px;
+      padding: 5px;
+      border: 1px solid black;
+      content: '';
+      margin: auto 5px;
+      border-radius: 5px;
+      box-shadow: 1px 1px 1px 0px rgba(0,0,0,0.75);
+    }
+    .seat.active {
+      background: lightblue;
+      box-shadow: 0px 0px 1px 0px rgba(0,0,0,0.75);
+    }
+    .seat:active {
+      background: lightblue;
+      box-shadow: 0px 0px 1px 0px rgba(0,0,0,0.75);
+    }
+    .seat.disabled {
+      background: lightgrey;
+      box-shadow: 0px 0px 1px 0px rgba(0,0,0,0.75);
+    }
+    .screen {
+      margin-top: 100px;
+      width: 200px;
+      height: 10px;
+      background: lightgrey;
+    }
+    .screen:after {
+      position: relative;
+      top: 5px;
+      left: 50%;
+      margin: -17px;
+      content: 'screen';
+    }
+    .center {
+      display: flex;
+      justify-content: center;
+    }
+    #selection {
+      height: 20px;
+      margin-bottom: 50px;
+    }
+  </style>
+  </head>
+  <body>
+    <div id="selection"></div>
+    <div id="seating" class="center">
+      <span class="seat">1</span>
+      <span class="seat">2</span>
+      <span class="seat">3</span>
+      <span class="seat">4</span>
+      <span class="seat">5</span>
+      <span class="seat">6</span>
+      <span class="seat">7</span>
+      <span class="seat">8</span>
+      <span class="seat">9</span>
+      <span class="seat">10</span>
+      <span class="seat">11</span>
+      <span class="seat">12</span>
+      <span class="seat active">13</span>
+      <span class="seat disabled">14</span>
+    </div>
+    <div class="center">
+      <div class="screen"></div>
+    </div>
+
+    <script>
+      const seats = document.getElementById('seating');
+      const selection = document.getElementById('selection');
+      var seatsSelected = [];
+
+      function handleSeatClick(e) {
+        const target = e.target;
+
+        if (target.tagName !== 'SPAN') return;
+
+        const classes = target.classList;
+        const value = target.textContent;
+        if (classes.contains('active')) {
+          classes.remove('active');
+          seatsSelected = seatsSelected.filter(e => e !== value);
+        } else {
+          classes.add('active');
+          seatsSelected.push(value);
+        }
+        selection.innerText = `${seatsSelected.length ? 'Seats selected: ' : ''}` + seatsSelected.join(', ');
+      }
+
+      seats.addEventListener('click', handleSeatClick);
+    </script>
+  </body>
+</html>
